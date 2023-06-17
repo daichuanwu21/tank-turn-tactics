@@ -46,6 +46,7 @@ function App() {
         coordinateY: 2,
         range: 1,
         health: 3,
+        ap: 1,
       })
     );
 

@@ -13,6 +13,9 @@ export default function GameBoard() {
             key={tank.uuid}
             coordinateX={tank.coordinateX}
             coordinateY={tank.coordinateY}
+            range={tank.range}
+            health={tank.health}
+            ap={tank.ap}
           />
         );
       })}
