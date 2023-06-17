@@ -25,7 +25,8 @@ export const tanksSlice = createSlice({
         (tank) => tank.uuid === action.payload.uuid
       );
 
-      targetTank[0].position = action.payload.position;
+      targetTank[0].coordinateX = action.payload.coordinateX;
+      targetTank[0].coordinateY = action.payload.coordinateY;
       targetTank[0].range = action.payload.range;
       targetTank[0].health = action.payload.health;
       if (action.payload.ap) targetTank[0].ap = action.payload.ap;

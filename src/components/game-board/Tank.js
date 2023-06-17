@@ -1,23 +1,20 @@
 import { useMemo } from "react";
 import * as constants from "../../constants";
 
-export default function Tank({ position }) {
-  const locationInPixels = useMemo(() => {
-    const [column, rowNum] = position.split("_");
-    const columnNum = constants.COLUMNS.indexOf(column);
-
+export default function Tank({ coordinateX, coordinateY }) {
+  const calculatedOffset = useMemo(() => {
     const topOffset =
       2 + // Account for padding
-      rowNum * 2 + // Account for padding
-      rowNum * constants.SQUARE_SIZE;
+      coordinateY * 2 + // Account for padding
+      coordinateY * constants.SQUARE_SIZE;
 
     const leftOffset =
       2 + // Account for padding
-      columnNum * 2 + // Account for padding
-      columnNum * constants.SQUARE_SIZE;
+      coordinateX * 2 + // Account for padding
+      coordinateX * constants.SQUARE_SIZE;
 
     return [topOffset, leftOffset];
-  }, [position]);
+  }, [coordinateX, coordinateY]);
 
   return (
     <div
@@ -26,8 +23,8 @@ export default function Tank({ position }) {
         width: constants.SQUARE_SIZE,
 
         position: "absolute",
-        top: locationInPixels[0],
-        left: locationInPixels[1],
+        top: calculatedOffset[0],
+        left: calculatedOffset[1],
       }}
     >
       <p>Occupied</p>

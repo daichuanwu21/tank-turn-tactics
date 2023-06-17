@@ -8,7 +8,13 @@ export default function GameBoard() {
     <div style={{ position: "absolute" }}>
       <Grid />
       {tanks.map((tank) => {
-        return <Tank key={tank.uuid} position={tank.position} />;
+        return (
+          <Tank
+            key={tank.uuid}
+            coordinateX={tank.coordinateX}
+            coordinateY={tank.coordinateY}
+          />
+        );
       })}
     </div>
   );

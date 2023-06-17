@@ -21,7 +21,8 @@ function App() {
       initialSync([
         {
           uuid: TANKS[0],
-          position: "a_1",
+          coordinateX: 0,
+          coordinateY: 1,
           range: 1,
           health: 3,
         },
@@ -31,7 +32,8 @@ function App() {
     dispatch(
       addTank({
         uuid: TANKS[1],
-        position: "b_1",
+        coordinateX: 1,
+        coordinateY: 1,
         range: 2,
         health: 3,
       })
@@ -40,7 +42,8 @@ function App() {
     dispatch(
       updateTank({
         uuid: TANKS[0],
-        position: "a_2",
+        coordinateX: 0,
+        coordinateY: 2,
         range: 1,
         health: 3,
       })
@@ -49,7 +52,8 @@ function App() {
     dispatch(
       addTank({
         uuid: TANKS[2],
-        position: "c_0",
+        coordinateX: 2,
+        coordinateY: 0,
         range: 2,
         health: 3,
       })

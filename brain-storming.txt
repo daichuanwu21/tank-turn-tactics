@@ -1,7 +1,8 @@
 tank object:
 {
   uuid: string;
-  position: string; // {column}_{row number} e.g. a_1 or g_9, NOTE: row starts from 0 internally!
+  coordinateX: number; // column, starts from 0, 0 => A (display)
+  coordinateY: number; // row, starts from 0, 0 => 1 (display)
   range: number;
   health: number;
   ap?: number;
