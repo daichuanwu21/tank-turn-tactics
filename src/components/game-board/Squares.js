@@ -9,8 +9,14 @@ export default function Squares() {
         flexDirection: "column", // Use flexbox to organise each child vertically
 
         // Define overall board size
-        height: constants.ROWS * constants.SQUARE_SIZE,
-        width: constants.COLUMNS.length * constants.SQUARE_SIZE,
+        height:
+          constants.ROWS * constants.SQUARE_SIZE + // Base size of grid
+          2 * constants.ROWS, // Account for size added by padding
+        width:
+          constants.COLUMNS.length * constants.SQUARE_SIZE + // Base size of grid
+          2 * constants.COLUMNS.length, // Account for size added by padding
+
+        border: "1px solid grey", // Hacky workaround for outside squares only have 1px of border in total
       }}
     >
       {/* Create the rows first since the column-direction flexbox expects rows of content */}
@@ -28,7 +34,7 @@ export default function Squares() {
               const squareKey =
                 constants.COLUMNS[columnNumber] + rowNumber.toString();
 
-              return <Square key={squareKey} squareKey={squareKey}></Square>;
+              return <Square key={squareKey} squareKey={squareKey} />;
             })}
           </div>
         );
