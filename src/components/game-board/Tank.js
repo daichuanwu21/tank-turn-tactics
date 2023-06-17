@@ -28,6 +28,7 @@ export default function Tank({
     const colour1 = [169, 169, 169]; // darkgrey
     const colour2 = [0, 255, 255]; // cyan
 
+    // Interpolate between dull and bright colour to show range
     const red = (colour2[0] - colour1[0]) * (limitedRange / 5) + colour1[0];
     const green = (colour2[1] - colour1[1]) * (limitedRange / 5) + colour1[1];
     const blue = (colour2[2] - colour1[2]) * (limitedRange / 5) + colour1[2];
