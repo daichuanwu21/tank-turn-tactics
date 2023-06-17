@@ -1,7 +1,7 @@
 import Square from "./Square";
 import * as constants from "../../constants";
 
-export default function Squares() {
+export default function Grid() {
   return (
     <div
       style={{
@@ -32,7 +32,7 @@ export default function Squares() {
             {/* Then create the corresponding columns within the rows */}
             {[...Array(constants.COLUMNS.length)].map((_, columnNumber) => {
               const squareKey =
-                constants.COLUMNS[columnNumber] + rowNumber.toString();
+                constants.COLUMNS[columnNumber] + (rowNumber + 1).toString();
 
               return <Square key={squareKey} squareKey={squareKey} />;
             })}
