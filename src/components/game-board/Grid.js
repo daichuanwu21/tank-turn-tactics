@@ -9,14 +9,10 @@ export default function Grid() {
         flexDirection: "column", // Use flexbox to organise each child vertically
 
         // Define overall board size
-        height:
-          constants.ROWS * constants.SQUARE_SIZE + // Base size of grid
-          2 * constants.ROWS, // Account for size added by padding
-        width:
-          constants.COLUMNS.length * constants.SQUARE_SIZE + // Base size of grid
-          2 * constants.COLUMNS.length, // Account for size added by padding
+        height: constants.ROWS * constants.SQUARE_SIZE,
+        width: constants.COLUMNS.length * constants.SQUARE_SIZE,
 
-        border: "1px solid grey", // Hacky workaround for outside squares only have 1px of border in total
+        backgroundColor: "#4d4e4e",
       }}
     >
       {/* Create the rows first since the column-direction flexbox expects rows of content */}

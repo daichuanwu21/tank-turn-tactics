@@ -9,15 +9,9 @@ export default function Tank({
   ap = null,
 }) {
   const calculatedOffset = useMemo(() => {
-    const topOffset =
-      2 + // Account for padding
-      coordinateY * 2 + // Account for padding
-      coordinateY * constants.SQUARE_SIZE;
+    const topOffset = coordinateY * constants.SQUARE_SIZE;
 
-    const leftOffset =
-      2 + // Account for padding
-      coordinateX * 2 + // Account for padding
-      coordinateX * constants.SQUARE_SIZE;
+    const leftOffset = coordinateX * constants.SQUARE_SIZE;
 
     return [topOffset, leftOffset];
   }, [coordinateX, coordinateY]);
@@ -33,7 +27,7 @@ export default function Tank({
     const green = (colour2[1] - colour1[1]) * (limitedRange / 5) + colour1[1];
     const blue = (colour2[2] - colour1[2]) * (limitedRange / 5) + colour1[2];
 
-    return `${red},${green},${blue}`;
+    return `${red},${green},${blue},0.5`;
   }, [range]);
 
   return (
@@ -61,7 +55,7 @@ export default function Tank({
           alignItems: "center",
 
           borderRadius: 15,
-          backgroundColor: `rgb(${tankColour})`,
+          backgroundColor: `rgba(${tankColour})`,
         }}
       >
         <p style={{ margin: 0 }}>{"❤️".repeat(health)}</p>
