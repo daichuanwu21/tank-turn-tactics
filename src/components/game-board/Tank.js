@@ -8,7 +8,8 @@ export default function Tank({
   health,
   ap = null,
 }) {
-  const calculatedOffset = useMemo(() => {
+  // Calculate pixel position on grid from tank coordinates
+  const positionOnGrid = useMemo(() => {
     const topOffset = coordinateY * constants.SQUARE_SIZE;
 
     const leftOffset = coordinateX * constants.SQUARE_SIZE;
@@ -36,11 +37,11 @@ export default function Tank({
         height: constants.SQUARE_SIZE,
         width: constants.SQUARE_SIZE,
 
-        // Hacky way to place Tanks over the grid
+        // Hacky way to place Tanks on the grid
         // i.e. use grid as parent div with absolute positioning and calculated offsets to place Tank
         position: "absolute",
-        top: calculatedOffset[0],
-        left: calculatedOffset[1],
+        top: positionOnGrid[0],
+        left: positionOnGrid[1],
       }}
     >
       <div
