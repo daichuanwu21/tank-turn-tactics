@@ -1,5 +1,5 @@
 {
-  "name": "tank-turn-tactics",
+  "name": "tank-turn-tactics-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
