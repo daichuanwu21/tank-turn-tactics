@@ -2,7 +2,7 @@ import { logger } from "../index";
 import isTrustedError from "./is-trusted-error.function";
 
 // Centralised error handler
-const handleError = (err: Error) => {
+const handleError = (err: any) => {
   if (isTrustedError(err)) {
     logger.error(err);
   } else {
