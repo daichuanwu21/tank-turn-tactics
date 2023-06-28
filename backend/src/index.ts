@@ -4,7 +4,7 @@ import PinoHttp from "pino-http";
 import express from "express";
 import http from "http";
 
-import expressErrorHandler from "./error/expressErrorHandler.middleware";
+import expressErrorHandler from "./error/express-error-handler.middleware";
 import { getPinoHttpOptions } from "./environment";
 
 const pinoHttp = PinoHttp(getPinoHttpOptions());
