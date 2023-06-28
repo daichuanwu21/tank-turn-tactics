@@ -5,23 +5,9 @@ import express from "express";
 import http from "http";
 
 import expressErrorHandler from "./error/expressErrorHandler.middleware";
+import { getPinoHttpOptions } from "./environment";
 
-const isProductionEnvironment = process.env.DEBUG !== "YES";
-
-const pinoHttp = PinoHttp(
-  isProductionEnvironment
-    ? {
-        level: "warn",
-      }
-    : {
-        transport: {
-          target: "pino-pretty",
-          options: {
-            colorize: true,
-          },
-        },
-      }
-);
+const pinoHttp = PinoHttp(getPinoHttpOptions());
 const logger = pinoHttp.logger;
 
 const app = express();
@@ -36,4 +22,4 @@ httpServer.listen({
 
 logger.info("Hello World!");
 
-export { logger, isProductionEnvironment };
+export { logger };
