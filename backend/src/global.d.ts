@@ -3,7 +3,7 @@ declare global {
     interface ProcessEnv {
       LISTEN_PORT: string;
 
-      DEBUG?: string;
+      DEBUG: string;
     }
   }
 }

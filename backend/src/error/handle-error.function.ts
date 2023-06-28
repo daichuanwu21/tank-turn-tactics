@@ -1,4 +1,4 @@
-import { logger } from "../index";
+import logger from "../logger";
 import isTrustedError from "./is-trusted-error.function";
 
 // Centralised error handler
