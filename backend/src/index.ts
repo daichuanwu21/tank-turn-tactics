@@ -8,13 +8,14 @@ import cors from "cors";
 import expressErrorHandler from "./error/express-error-handler.middleware";
 
 const app = express();
+app.disable("x-powered-by");
 app.use(pinoHttp);
-app.use(expressErrorHandler);
 app.use(
   cors({
     origin: config.corsOrigin,
   })
 );
+app.use(expressErrorHandler);
 
 const httpServer = http.createServer(app);
 httpServer.listen({
