@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import APIError from "./api-error.error";
+import APIError from "./api.error";
 import handleError from "./handle-error.function";
 import isTrustedError from "./is-trusted-error.function";
 import { ReasonPhrases, StatusCodes, getReasonPhrase } from "http-status-codes";

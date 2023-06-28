@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import AppError from "./app-error.error";
+import AppError from "./app.error";
 
 // Error thrown by Express (i.e. within routes)
 // API errors are not logged if trusted

@@ -1,4 +1,4 @@
-import AppError from "./error/app-error.error";
+import AppError from "./error/app.error";
 import handleError from "./error/handle-error.function";
 
 interface IConfigElement {
