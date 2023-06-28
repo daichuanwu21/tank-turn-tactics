@@ -4,7 +4,7 @@ import handleError from "./error/handle-error.function";
 interface IConfigElement {
   envionmentVariableName: string;
   configName: string;
-  type: string;
+  type: "number" | "boolean" | "string";
 }
 
 const configElements: IConfigElement[] = [
@@ -18,11 +18,17 @@ const configElements: IConfigElement[] = [
     configName: "debug",
     type: "boolean",
   },
+  {
+    envionmentVariableName: "CORS_ORIGIN",
+    configName: "corsOrigin",
+    type: "string",
+  },
 ];
 
 interface IConfig {
   listenPort: string;
   debug: boolean;
+  corsOrigin: string;
 }
 
 interface IParseEnvConfigByType {
