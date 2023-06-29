@@ -23,12 +23,24 @@ const configElements: IConfigElement[] = [
     configName: "corsOrigin",
     type: "string",
   },
+  {
+    envionmentVariableName: "GRID_X_SIZE",
+    configName: "gridXSize",
+    type: "number",
+  },
+  {
+    envionmentVariableName: "GRID_Y_SIZE",
+    configName: "gridYSize",
+    type: "number",
+  },
 ];
 
 interface IConfig {
   listenPort: string;
   debug: boolean;
   corsOrigin: string;
+  gridXSize: number;
+  gridYSize: number;
 }
 
 interface IParseEnvConfigByType {
