@@ -45,7 +45,7 @@ RETURNS
   - status: 403
   - detail: email domain not allowed
 
-### /users/:id/verify-email
+### /users/:userId/verify-email
 
 #### GET - Verify email
 
@@ -54,10 +54,14 @@ EXPECTS
 STEPS
 
 - check for non-empty userId: NO? send 400
+- start transaction
 - check if user with userId exists in database: NO? send 400
 - check if user's email is verified: YES? send 400
-- modify verification attribute
-- save user
+- modify user verification attribute
+- generate random position
+- check if position is taken by another tank
+- add tank with 3 HP, 2 R, 0 AP
+- end transaction
 - send 200
 
 RETURNS
@@ -83,8 +87,8 @@ EXPECTS
 
 STEPS
 
-- check for valid email (express validator): NO? send 400
-- check for non-empty password (express validator): NO? send 400
+- check for valid email (express validator): NO? send 401
+- check for non-empty password (express validator): NO? send 401
 - normalise email (validatorjs)
 - check if user with email exists: NO? send 401
 - hash password
@@ -99,12 +103,6 @@ RETURNS
 - 200
 
   - token
-
-- 400
-
-  - title
-  - status: 400
-  - detail: invalid username or password supplied
 
 - 401
 
