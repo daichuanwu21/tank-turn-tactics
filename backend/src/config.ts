@@ -14,6 +14,11 @@ const configElements: IConfigElement[] = [
     type: "number",
   },
   {
+    envionmentVariableName: "MONGODB_URI",
+    configName: "mongoDBUri",
+    type: "string",
+  },
+  {
     envionmentVariableName: "DEBUG",
     configName: "debug",
     type: "boolean",
@@ -26,6 +31,11 @@ const configElements: IConfigElement[] = [
   {
     envionmentVariableName: "INVITE_CODE",
     configName: "inviteCode",
+    type: "string",
+  },
+  {
+    envionmentVariableName: "WHITELISTED_EMAIL_DOMAIN",
+    configName: "whitelistedEmailDomain",
     type: "string",
   },
   {
@@ -42,9 +52,11 @@ const configElements: IConfigElement[] = [
 
 interface IConfig {
   listenPort: string;
+  mongoDBUri: string;
   debug: boolean;
   corsOrigin: string;
   inviteCode: string;
+  whitelistedEmailDomain: string;
   gridXSize: number;
   gridYSize: number;
 }

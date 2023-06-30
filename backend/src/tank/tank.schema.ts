@@ -23,5 +23,7 @@ const tankSchema = new Schema<ITankSchema>({
   },
 });
 
+tankSchema.index({ positionX: 1, positionY: 1 }, { unique: true });
+
 export default tankSchema;
 export { ITankSchema };

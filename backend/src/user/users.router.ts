@@ -1,0 +1,57 @@
+import { Router } from "express";
+import { checkSchema, param } from "express-validator";
+import asyncWrapper from "../utils/async-wrapper.function";
+import registerController from "./register.controller";
+import verifyEmailController from "./verify-email.controller";
+import loginController from "./login.controller";
+
+const usersRouter = Router();
+
+usersRouter.post(
+  "/register",
+  checkSchema({
+    invite_code: {
+      notEmpty: true,
+      errorMessage: "Invalid invite code supplied!",
+    },
+    email: {
+      isEmail: true,
+      errorMessage: "Invalid email supplied!",
+    },
+    password: {
+      isLength: {
+        options: { min: 8, max: 1000 },
+      },
+      errorMessage: "Password must be at least 8 characters long!",
+    },
+  }),
+  asyncWrapper(registerController)
+);
+
+usersRouter.get(
+  "/:userId/verify-email",
+  param("userId")
+    .isAlphanumeric()
+    .isLength({ min: 24, max: 24 })
+    .withMessage("Invalid verification code supplied!"),
+  asyncWrapper(verifyEmailController)
+);
+
+usersRouter.post(
+  "/login",
+  checkSchema({
+    email: {
+      isEmail: true,
+      errorMessage: "Incorrect username or password supplied!",
+    },
+    password: {
+      isLength: {
+        options: { min: 8, max: 1000 },
+      },
+      errorMessage: "Incorrect username or password supplied!",
+    },
+  }),
+  asyncWrapper(loginController)
+);
+
+export default usersRouter;
