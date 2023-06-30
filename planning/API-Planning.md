@@ -6,23 +6,27 @@ EXPECTS
 
 - email
 - password
+- invite_code
 
 STEPS
 
-1. check for valid email (express validator): NO? send 400
-2. check password at least 8 characters (express validator): NO? send 400
-3. normalise email (validatorjs)
-4. check email is in whitelisted domain: NO? send 403
-5. check if user with email already exists: YES? send 400
-6. hash password
-7. save user to database
-8. send 200
+- check for invite code (express validator): NO? send 400
+- check for valid email (express validator): NO? send 400
+- check password at least 8 characters (express validator): NO? send 400
+- check if invite code is correct: NO? send 401
+- normalise email (validatorjs)
+- check email is in whitelisted domain: NO? send 403
+- check if user with email already exists: YES? send 400
+- hash password
+- save user to database
+- send verification email with link based on user objectId
+- send 200
 
 RETURNS
 
 - 200
 
-  - message: account successfully created, check your inbox for email
+  - detail: account successfully created, check your inbox for email
 
 - 400
 
@@ -30,11 +34,44 @@ RETURNS
   - status: 400
   - detail: invalid data/ user already exists
 
+- 401
+
+  - title
+  - status: 401
+  - detail: invalid invite code
+
 - 403
   - title
   - status: 403
   - detail: email domain not allowed
 
+### /users/:id/verify-email
+
+#### GET - Verify email
+
+EXPECTS
+
+STEPS
+
+- check for non-empty userId: NO? send 400
+- check if user with userId exists in database: NO? send 400
+- check if user's email is verified: YES? send 400
+- modify verification attribute
+- save user
+- send 200
+
+RETURNS
+
+- 200
+
+  - detail: email {email} verified
+
+- 400
+
+  - title
+  - status: 400
+  - detail: invalid userId supplied/user email already verified
+
 ### /users/login
 
 #### POST - Login to an account
@@ -53,6 +90,7 @@ STEPS
 - hash password
 - timing safe compare hash
 - check if same: NO? send 401
+- check if user has verified email: NO? send 403
 - sign JWT token
 - send 200 with token
 
@@ -69,44 +107,13 @@ RETURNS
   - detail: invalid username or password supplied
 
 - 401
+
   - title
   - status: 401
   - detail: incorrect username or password
 
-### /users/login
-
-#### POST - Login to an account
-
-EXPECTS
-
-- email
-- password
-
-STEPS
-
-- check for valid email (express validator): NO? send 400
-- check for non-empty password (express validator): NO? send 400
-- normalise email (validatorjs)
-- check if user with email exists: NO? send 401
-- hash password
-- timing safe compare hash
-- check if same: NO? send 401
-- sign JWT token
-- send 200 with token
-
-RETURNS
-
-- 200
-
-  - token
-
-- 400
+- 403
 
   - title
-  - status: 400
-  - detail: invalid username or password supplied
-
-- 401
-  - title
-  - status: 401
-  - detail: incorrect username or password
+  - status: 403
+  - detail: need to verify your email
