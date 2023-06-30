@@ -24,6 +24,11 @@ const configElements: IConfigElement[] = [
     type: "string",
   },
   {
+    envionmentVariableName: "INVITE_CODE",
+    configName: "inviteCode",
+    type: "string",
+  },
+  {
     envionmentVariableName: "GRID_X_SIZE",
     configName: "gridXSize",
     type: "number",
@@ -39,6 +44,7 @@ interface IConfig {
   listenPort: string;
   debug: boolean;
   corsOrigin: string;
+  inviteCode: string;
   gridXSize: number;
   gridYSize: number;
 }
