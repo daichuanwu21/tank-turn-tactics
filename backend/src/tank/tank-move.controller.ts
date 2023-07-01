@@ -1,5 +1,5 @@
 import { Request as JWTRequest } from "express-jwt";
-import JWTPayload from "../user/jwt-payload.interface";
+import JWTPayload from "../utils/jwt-payload.interface";
 import { Response } from "express";
 import APIError from "../error/api.error";
 import { StatusCodes } from "http-status-codes";
