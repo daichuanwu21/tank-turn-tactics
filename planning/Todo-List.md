@@ -7,16 +7,21 @@
   - you getting hit by a player
   - you dying
 
+- implement real-time map state synchronization between client and server with something like socket.IO
+
+- implement sending verification email upon registration
+
+- FRONTEND: add registration and sign in support
+- FRONTEND: map API endpoints to buttons on bottom accordion
+
 ### Medium-priority
 
 - add rate-limiting for registration
-- add COOP, COEP, etc for frontend (https://scotthelme.co.uk/coop-and-coep/)
+- add COOP, COEP, etc for frontend (https://scotthelme.co.uk/coop-and-coep/), maybe just a footnote in deployment recommendations?
 - add stricter password policy
 - add bsd-0 clause/public domain equivalent license to project and readme
 
 ### Low-priority
-
-- add catch cases for common runtime errors like listen addr in use?
 
 - handle uncaught exceptions and or promises with sentry (privacy implications must be considered)
 - setup code review with sonaar?
