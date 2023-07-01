@@ -1,15 +1,11 @@
 ### High-priority
 
-- reminder: make sure to normalise email from users
-
 - add a notification system, things that should trigger a notification:
 
   - you receiving an AP or HP from another player
   - you receiving an AP for the day
   - you getting hit by a player
   - you dying
-
-- move to an invite system for registering users
 
 ### Medium-priority
 
@@ -24,3 +20,5 @@
 
 - handle uncaught exceptions and or promises with sentry (privacy implications must be considered)
 - setup code review with sonaar?
+
+- centralised tank logic (e.g. one controller for adding, moving, shooting, giving AP and etc?)

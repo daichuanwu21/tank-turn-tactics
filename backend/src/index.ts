@@ -11,6 +11,7 @@ import handleHttpServerError from "./error/handle-http-server-error.function";
 import mongoose from "mongoose";
 import handleError from "./error/handle-error.function";
 import verifyJSON from "./utils/verify-json.function";
+import tanksRouter from "./tank/tanks.router";
 
 const app = express();
 app.disable("x-powered-by");
@@ -25,6 +26,7 @@ app.use(
 app.use(express.urlencoded({ extended: false, type: "application/json" }));
 
 app.use("/users", usersRouter);
+app.use("/tanks", tanksRouter);
 
 app.use(expressErrorHandler);
 
