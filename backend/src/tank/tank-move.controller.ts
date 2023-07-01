@@ -4,14 +4,14 @@ import { Response } from "express";
 import APIError from "../error/api.error";
 import { StatusCodes } from "http-status-codes";
 import messageOnlyValidationResult from "../utils/message-only.result-factory";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { Tank } from "../models";
 
 const tankMoveController = async (
   req: JWTRequest<JWTPayload>,
   res: Response
 ) => {
-  // Ensure all fields are present (tankId, positionX, positionY)
+  // Ensure all fields are present (positionX, positionY)
   const result = messageOnlyValidationResult(req);
   if (!result.isEmpty()) {
     throw new APIError(StatusCodes.BAD_REQUEST, result.array()[0], true);
@@ -20,23 +20,17 @@ const tankMoveController = async (
   // Start transaction
   await mongoose.connection.transaction(
     async (session) => {
-      // Check if specified tank exists in database
-      const tank = await Tank.findById(req.params.tankId).session(session);
+      req.auth = req.auth as JWTPayload;
+
+      // Check if tank exists in database
+      const tank = await Tank.findOne({
+        userId: new Types.ObjectId(req.auth.userId),
+      }).session(session);
       if (!tank) {
         throw new APIError(
-          StatusCodes.BAD_REQUEST,
-          "Invalid tankId supplied!",
-          true
-        );
-      }
-
-      // Check if current tank belongs to the user
-      req.auth = req.auth as JWTPayload;
-      if (req.auth.userId !== tank.userId.toString()) {
-        throw new APIError(
-          StatusCodes.FORBIDDEN,
-          "You can only move your own tank!",
-          true
+          StatusCodes.INTERNAL_SERVER_ERROR,
+          "Tank not found by userId! Potentially inconsistent state!",
+          false
         );
       }
 

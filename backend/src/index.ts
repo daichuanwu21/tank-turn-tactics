@@ -6,12 +6,12 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import expressErrorHandler from "./error/express-error-handler.middleware";
-import usersRouter from "./user/users.router";
+import userRouter from "./user/user.router";
 import handleHttpServerError from "./error/handle-http-server-error.function";
 import mongoose from "mongoose";
 import handleError from "./error/handle-error.function";
 import verifyJSON from "./utils/verify-json.function";
-import tanksRouter from "./tank/tanks.router";
+import tankRouter from "./tank/tank.router";
 
 const app = express();
 app.disable("x-powered-by");
@@ -25,8 +25,8 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false, type: "application/json" }));
 
-app.use("/users", usersRouter);
-app.use("/tanks", tanksRouter);
+app.use("/user", userRouter);
+app.use("/tank", tankRouter);
 
 app.use(expressErrorHandler);
 

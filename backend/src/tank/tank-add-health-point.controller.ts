@@ -3,36 +3,24 @@ import JWTPayload from "../user/jwt-payload.interface";
 import { Response } from "express";
 import APIError from "../error/api.error";
 import { StatusCodes } from "http-status-codes";
-import messageOnlyValidationResult from "../utils/message-only.result-factory";
 import { Tank } from "../models";
+import { Types } from "mongoose";
 
 const tankAddHealthPointController = async (
   req: JWTRequest<JWTPayload>,
   res: Response
 ) => {
-  // Ensure all fields are present (tankId, targetTankId)
-  const result = messageOnlyValidationResult(req);
-  if (!result.isEmpty()) {
-    throw new APIError(StatusCodes.BAD_REQUEST, result.array()[0], true);
-  }
+  req.auth = req.auth as JWTPayload;
 
-  // Check if specified tank exists in database
-  const tank = await Tank.findById(req.params.tankId);
+  // Check if tank exists in database
+  const tank = await Tank.findOne({
+    userId: new Types.ObjectId(req.auth.userId),
+  });
   if (!tank) {
     throw new APIError(
-      StatusCodes.BAD_REQUEST,
-      "Invalid tankId supplied!",
-      true
-    );
-  }
-
-  // Check if current tank belongs to the user
-  req.auth = req.auth as JWTPayload;
-  if (req.auth.userId !== tank.userId.toString()) {
-    throw new APIError(
-      StatusCodes.FORBIDDEN,
-      "You can only add HP onto your own tank!",
-      true
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      "Tank not found by userId! Potentially inconsistent state!",
+      false
     );
   }
 

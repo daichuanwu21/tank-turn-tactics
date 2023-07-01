@@ -5,9 +5,9 @@ import registerController from "./register.controller";
 import verifyEmailController from "./verify-email.controller";
 import loginController from "./login.controller";
 
-const usersRouter = Router();
+const userRouter = Router();
 
-usersRouter.post(
+userRouter.post(
   "/register",
   checkSchema({
     invite_code: {
@@ -28,8 +28,8 @@ usersRouter.post(
   asyncWrapper(registerController)
 );
 
-usersRouter.get(
-  "/:userId/verify-email",
+userRouter.get(
+  "/verify-email/:userId",
   param("userId")
     .isAlphanumeric()
     .isLength({ min: 24, max: 24 })
@@ -37,7 +37,7 @@ usersRouter.get(
   asyncWrapper(verifyEmailController)
 );
 
-usersRouter.post(
+userRouter.post(
   "/login",
   checkSchema({
     email: {
@@ -54,4 +54,4 @@ usersRouter.post(
   asyncWrapper(loginController)
 );
 
-export default usersRouter;
+export default userRouter;

@@ -8,22 +8,12 @@ import tankShootController from "./tank-shoot.controller";
 import tankUpgradeRangeController from "./tank-upgrade-range.controller";
 import tankAddHealthPointController from "./tank-add-health-point.controller";
 
-const tanksRouter = Router();
+const tankRouter = Router();
 
-tanksRouter.post(
-  "/:tankId/move",
+tankRouter.post(
+  "/move",
   expressjwt({ secret: config.jwtSecret, algorithms: ["HS512"] }),
   checkSchema({
-    tankId: {
-      isAlphanumeric: true,
-      isLength: {
-        options: {
-          min: 24,
-          max: 24,
-        },
-      },
-      errorMessage: "Invalid tankId supplied!",
-    },
     positionX: {
       isInt: {
         options: {
@@ -48,20 +38,10 @@ tanksRouter.post(
   asyncWrapper(tankMoveController)
 );
 
-tanksRouter.post(
-  "/:tankId/shoot",
+tankRouter.post(
+  "/shoot",
   expressjwt({ secret: config.jwtSecret, algorithms: ["HS512"] }),
   checkSchema({
-    tankId: {
-      isAlphanumeric: true,
-      isLength: {
-        options: {
-          min: 24,
-          max: 24,
-        },
-      },
-      errorMessage: "Invalid tankId supplied!",
-    },
     targetTankId: {
       isAlphanumeric: true,
       isLength: {
@@ -76,40 +56,16 @@ tanksRouter.post(
   asyncWrapper(tankShootController)
 );
 
-tanksRouter.post(
-  "/:tankId/upgrade-range",
+tankRouter.post(
+  "/upgrade-range",
   expressjwt({ secret: config.jwtSecret, algorithms: ["HS512"] }),
-  checkSchema({
-    tankId: {
-      isAlphanumeric: true,
-      isLength: {
-        options: {
-          min: 24,
-          max: 24,
-        },
-      },
-      errorMessage: "Invalid tankId supplied!",
-    },
-  }),
   asyncWrapper(tankUpgradeRangeController)
 );
 
-tanksRouter.post(
-  "/:tankId/add-health-point",
+tankRouter.post(
+  "/add-health-point",
   expressjwt({ secret: config.jwtSecret, algorithms: ["HS512"] }),
-  checkSchema({
-    tankId: {
-      isAlphanumeric: true,
-      isLength: {
-        options: {
-          min: 24,
-          max: 24,
-        },
-      },
-      errorMessage: "Invalid tankId supplied!",
-    },
-  }),
   asyncWrapper(tankAddHealthPointController)
 );
 
-export default tanksRouter;
+export default tankRouter;
