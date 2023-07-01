@@ -29,6 +29,11 @@ const configElements: IConfigElement[] = [
     type: "string",
   },
   {
+    envionmentVariableName: "JWT_SECRET",
+    configName: "jwtSecret",
+    type: "string",
+  },
+  {
     envionmentVariableName: "INVITE_CODE",
     configName: "inviteCode",
     type: "string",
@@ -55,6 +60,7 @@ interface IConfig {
   mongoDBUri: string;
   debug: boolean;
   corsOrigin: string;
+  jwtSecret: string;
   inviteCode: string;
   whitelistedEmailDomain: string;
   gridXSize: number;

@@ -6,6 +6,8 @@ import validator from "validator";
 import { User } from "../models";
 import { promisify } from "util";
 import { pbkdf2, timingSafeEqual } from "crypto";
+import { sign } from "jsonwebtoken";
+import config from "../config";
 
 const loginController = async (req: Request, res: Response) => {
   // Ensure all fields are present (email, password)
@@ -58,11 +60,15 @@ const loginController = async (req: Request, res: Response) => {
     );
   }
 
-  // TODO: generate JWT
+  const token = await promisify(sign as any)(
+    {
+      userId: user._id.toString(),
+    },
+    config.jwtSecret,
+    { algorithm: "HS512" }
+  );
 
-  res.status(200).json({
-    token: "TODO",
-  });
+  res.status(200).json({ token });
 };
 
 export default loginController;
