@@ -8,7 +8,7 @@ import {
   removeTank,
 } from "./redux/tanksSlice";
 
-function App() {
+const App: React.FC = () => {
   // NOTE: these are tests for the redux store
   const dispatch = useDispatch();
   useEffect(() => {
@@ -64,10 +64,15 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div style={{ alignItems: "center", justifyContent: "center" }}>
+    <div
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <GameBoard />
     </div>
   );
-}
+};
 
 export default App;
