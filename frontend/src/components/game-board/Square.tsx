@@ -1,6 +1,12 @@
 import * as constants from "../../constants";
-export default function Square({ squareKey }) {
+
+interface ISquareProps {
+  squareKey: string;
+}
+
+export default function Square(props: ISquareProps) {
   const boxMargin = 4;
+
   return (
     <div
       style={{
@@ -23,7 +29,7 @@ export default function Square({ squareKey }) {
           margin: 3, // Override user agent stylesheet
         }}
       >
-        {squareKey}
+        {props.squareKey}
       </p>
     </div>
   );

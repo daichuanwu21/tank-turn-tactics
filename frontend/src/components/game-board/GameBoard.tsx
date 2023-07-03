@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Grid from "./Grid";
 import Tank from "./Tank";
 import { useEffect, useMemo, useState } from "react";
 import * as constants from "../../constants";
+import { ITankDocument, useTanksQuery } from "../../redux/game-api";
 
 const getViewportSize = () => ({
   width: window.innerWidth,
@@ -48,7 +48,7 @@ export default function GameBoard() {
     }
   }, [viewportSize]);
 
-  const tanks = useSelector((state: any) => state.tanks);
+  const { data } = useTanksQuery(undefined);
   return (
     <div
       style={{
@@ -71,18 +71,23 @@ export default function GameBoard() {
           >
             <div>
               <Grid />
-              {tanks.map((tank: any) => {
-                return (
-                  <Tank
-                    key={tank.uuid}
-                    coordinateX={tank.coordinateX}
-                    coordinateY={tank.coordinateY}
-                    range={tank.range}
-                    health={tank.health}
-                    ap={tank.ap}
-                  />
-                );
-              })}
+              {data &&
+                data.entities &&
+                data.ids.map((tankId: any) => {
+                  if (!data.entities[tankId]) return;
+                  const tankDoc = data.entities[tankId] as ITankDocument;
+
+                  return (
+                    <Tank
+                      key={tankDoc.id}
+                      displayName={tankDoc.displayName}
+                      positionX={tankDoc.positionX}
+                      positionY={tankDoc.positionY}
+                      range={tankDoc.range}
+                      health={tankDoc.healthPoints}
+                    />
+                  );
+                })}
             </div>
           </TransformComponent>
         </TransformWrapper>

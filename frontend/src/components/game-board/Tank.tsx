@@ -1,21 +1,24 @@
 import { useMemo } from "react";
 import * as constants from "../../constants";
 
-export default function Tank({
-  coordinateX,
-  coordinateY,
-  range,
-  health,
-  ap = null,
-}) {
+interface ITankProps {
+  displayName: string;
+  positionX: number;
+  positionY: number;
+  range: number;
+  health: number;
+}
+
+export default function Tank(props: ITankProps) {
+  const { displayName, positionX, positionY, range, health } = props;
   // Calculate pixel position on grid from tank coordinates
   const positionOnGrid = useMemo(() => {
-    const topOffset = coordinateY * constants.SQUARE_SIZE;
+    const topOffset = positionY * constants.SQUARE_SIZE;
 
-    const leftOffset = coordinateX * constants.SQUARE_SIZE;
+    const leftOffset = positionX * constants.SQUARE_SIZE;
 
     return [topOffset, leftOffset];
-  }, [coordinateX, coordinateY]);
+  }, [positionX, positionY]);
 
   const tankColour = useMemo(() => {
     const limitedRange = range > 5 ? 5 : range;
@@ -30,6 +33,14 @@ export default function Tank({
 
     return `${red},${green},${blue},0.5`;
   }, [range]);
+
+  const healthText = useMemo(() => {
+    if (health <= 3) {
+      return "❤️".repeat(health);
+    }
+
+    return `❤️ ${health}`;
+  }, [health]);
 
   return (
     <div
@@ -59,9 +70,9 @@ export default function Tank({
           backgroundColor: `rgba(${tankColour})`,
         }}
       >
-        <p style={{ margin: 0 }}>{"❤️".repeat(health)}</p>
+        <p style={{ margin: 0 }}>{displayName}</p>
+        <p style={{ margin: 0 }}>{healthText}</p>
         <p style={{ margin: 0 }}>R: {range}</p>
-        {ap !== null && <p style={{ margin: 0 }}>AP: {ap}</p>}
       </div>
     </div>
   );
