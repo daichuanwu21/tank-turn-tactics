@@ -48,50 +48,57 @@ export default function GameBoard() {
     }
   }, [viewportSize]);
 
-  const { data } = useTanksQuery(undefined);
+  const { data, error, isLoading } = useTanksQuery(undefined);
   return (
     <div
       style={{
         position: "relative", // Allow this div to act as parent div for children with absolute positioning
       }}
     >
-      {calculatedScale === undefined ? null : (
-        <TransformWrapper
-          key={`${viewportSize.width}x${viewportSize.height}`}
-          initialScale={calculatedScale}
-          minScale={calculatedScale}
-          maxScale={calculatedScale * 6}
-          centerOnInit
-        >
-          <TransformComponent
-            wrapperStyle={{
-              width: "100vw",
-              height: "100vh",
-            }}
-          >
-            <div>
-              <Grid />
-              {data &&
-                data.entities &&
-                data.ids.map((tankId: any) => {
-                  if (!data.entities[tankId]) return;
-                  const tankDoc = data.entities[tankId] as ITankDocument;
+      {error ? (
+        <h1>Uh oh, there was an error</h1>
+      ) : isLoading ? (
+        <h1>Syncing with server...</h1>
+      ) : data ? (
+        <>
+          {calculatedScale === undefined ? null : (
+            <TransformWrapper
+              key={`${viewportSize.width}x${viewportSize.height}`}
+              initialScale={calculatedScale}
+              minScale={calculatedScale}
+              maxScale={calculatedScale * 6}
+              centerOnInit
+            >
+              <TransformComponent
+                wrapperStyle={{
+                  width: "100vw",
+                  height: "100vh",
+                }}
+              >
+                <div>
+                  <Grid />
 
-                  return (
-                    <Tank
-                      key={tankDoc.id}
-                      displayName={tankDoc.displayName}
-                      positionX={tankDoc.positionX}
-                      positionY={tankDoc.positionY}
-                      range={tankDoc.range}
-                      health={tankDoc.healthPoints}
-                    />
-                  );
-                })}
-            </div>
-          </TransformComponent>
-        </TransformWrapper>
-      )}
+                  {data.ids.map((tankId: any) => {
+                    if (!data.entities[tankId]) return;
+                    const tankDoc = data.entities[tankId] as ITankDocument;
+
+                    return (
+                      <Tank
+                        key={tankDoc.id}
+                        displayName={tankDoc.displayName}
+                        positionX={tankDoc.positionX}
+                        positionY={tankDoc.positionY}
+                        range={tankDoc.range}
+                        health={tankDoc.healthPoints}
+                      />
+                    );
+                  })}
+                </div>
+              </TransformComponent>
+            </TransformWrapper>
+          )}
+        </>
+      ) : null}
     </div>
   );
 }
