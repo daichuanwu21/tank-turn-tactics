@@ -3,7 +3,7 @@ import APIError from "../error/api.error";
 import { StatusCodes } from "http-status-codes";
 import messageOnlyValidationResult from "../utils/message-only.result-factory";
 import validator from "validator";
-import { User } from "../models";
+import { Tank, User } from "../models";
 import { promisify } from "util";
 import { pbkdf2, timingSafeEqual } from "crypto";
 import { sign } from "jsonwebtoken";
@@ -55,14 +55,24 @@ const loginController = async (req: Request, res: Response) => {
   if (!user.emailVerified) {
     throw new APIError(
       StatusCodes.FORBIDDEN,
-      "You need to verify your emasil first!",
+      "You need to verify your email first!",
       true
+    );
+  }
+
+  const tank = await Tank.findOne({ userId: user._id }).lean();
+  if (!tank) {
+    throw new APIError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      "Tank-user relationship broken, potentially inconsistent state!",
+      false
     );
   }
 
   const token = await promisify(sign as any)(
     {
       userId: user._id.toString(),
+      tankId: tank._id.toString(),
     },
     config.jwtSecret,
     { algorithm: "HS512" }
