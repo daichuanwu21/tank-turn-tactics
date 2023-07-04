@@ -7,12 +7,7 @@
   - you getting hit by a player
   - you dying
 
-- implement real-time map state synchronization between client and server with something like socket.IO
-
 - implement sending verification email upon registration
-
-- FRONTEND: add registration and sign in support
-- FRONTEND: map API endpoints to buttons on bottom accordion
 
 ### Medium-priority
 

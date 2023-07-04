@@ -1,5 +1,6 @@
 import GameBoard from "./components/game-board/GameBoard";
 import FloatingUserMenu from "./components/auth/FloatingUserMenu";
+import { Notifications } from "@mantine/notifications";
 
 const App: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const App: React.FC = () => {
       }}
     >
       <GameBoard />
-
+      <Notifications />
       <FloatingUserMenu />
     </div>
   );

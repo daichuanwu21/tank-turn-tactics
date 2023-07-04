@@ -15,22 +15,35 @@ export interface ITankDocument {
   displayName: string;
 }
 
+interface IGenericSuccessResponse {
+  detail: string;
+}
+
+interface IMoveRequest {
+  positionX: number;
+  positionY: number;
+}
+
+interface IOtherTankInteractionRequest {
+  targetTankId: string;
+}
+
 const tanksAdapter = createEntityAdapter<ITankDocument>();
 export const gameApi = createApi({
   reducerPath: "gameApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${constants.API_ENDPOINT}/`,
+    baseUrl: `${constants.API_ENDPOINT}/tank/`,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
-        headers.set("authentication", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
   endpoints: (build) => ({
     tanks: build.query<EntityState<ITankDocument>, undefined>({
-      query: () => "initial-tank-sync",
+      query: () => `${constants.API_ENDPOINT}/initial-tank-sync`,
       transformResponse(response: ITankDocument[]) {
         return tanksAdapter.addMany(tanksAdapter.getInitialState(), response);
       },
@@ -67,7 +80,71 @@ export const gameApi = createApi({
         socket.disconnect();
       },
     }),
+    move: build.mutation<IGenericSuccessResponse, IMoveRequest>({
+      query: (moveReq) => ({
+        url: "move",
+        method: "POST",
+        body: moveReq,
+      }),
+    }),
+    addHealthPoint: build.mutation<IGenericSuccessResponse, {}>({
+      query: () => ({
+        url: "add-health-point",
+        method: "POST",
+      }),
+    }),
+    upgradeRange: build.mutation<IGenericSuccessResponse, {}>({
+      query: () => ({
+        url: "upgrade-range",
+        method: "POST",
+      }),
+    }),
+    shoot: build.mutation<
+      IGenericSuccessResponse,
+      IOtherTankInteractionRequest
+    >({
+      query: (targetTankReq) => ({
+        url: "shoot",
+        method: "POST",
+        body: targetTankReq,
+      }),
+    }),
+    giveActionPoint: build.mutation<
+      IGenericSuccessResponse,
+      IOtherTankInteractionRequest
+    >({
+      query: (targetTankReq) => ({
+        url: "give-action-point",
+        method: "POST",
+        body: targetTankReq,
+      }),
+    }),
+    giveHealthPoint: build.mutation<
+      IGenericSuccessResponse,
+      IOtherTankInteractionRequest
+    >({
+      query: (targetTankReq) => ({
+        url: "give-health-point",
+        method: "POST",
+        body: targetTankReq,
+      }),
+    }),
+    actionPoints: build.query<IGenericSuccessResponse & { ap: number }, {}>({
+      query: () => ({
+        url: "ap",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useTanksQuery } = gameApi;
+export const {
+  useTanksQuery,
+  useMoveMutation,
+  useAddHealthPointMutation,
+  useUpgradeRangeMutation,
+  useShootMutation,
+  useGiveActionPointMutation,
+  useGiveHealthPointMutation,
+  useActionPointsQuery,
+} = gameApi;

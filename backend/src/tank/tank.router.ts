@@ -9,8 +9,15 @@ import tankUpgradeRangeController from "./tank-upgrade-range.controller";
 import tankAddHealthPointController from "./tank-add-health-point.controller";
 import tankGiveHealthPointController from "./tank-give-health-point.controller";
 import tankGiveActionPointController from "./tank-give-action-point.controller";
+import tankAPController from "./tank-ap.controller";
 
 const tankRouter = Router();
+
+tankRouter.get(
+  "/ap",
+  expressjwt({ secret: config.jwtSecret, algorithms: ["HS512"] }),
+  asyncWrapper(tankAPController)
+);
 
 tankRouter.post(
   "/move",
