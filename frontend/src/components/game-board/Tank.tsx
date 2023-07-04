@@ -188,7 +188,9 @@ export default function Tank({ tank }: ITankProps) {
           id: notifID,
           color: "red",
           title: "Move failed",
-          message: (interactionResult as any).error.data.detail,
+          ...((interactionResult as any).error.data.detail
+            ? { message: (interactionResult as any).error.data.detail }
+            : { message: "Network Error" }),
           autoClose: 2000,
         });
       }
