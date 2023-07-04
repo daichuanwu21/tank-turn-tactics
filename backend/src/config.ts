@@ -14,6 +14,11 @@ const configElements: IConfigElement[] = [
     type: "number",
   },
   {
+    envionmentVariableName: "ENDPOINT",
+    configName: "endpoint",
+    type: "string",
+  },
+  {
     envionmentVariableName: "MONGODB_URI",
     configName: "mongoDBUri",
     type: "string",
@@ -22,6 +27,36 @@ const configElements: IConfigElement[] = [
     envionmentVariableName: "DEBUG",
     configName: "debug",
     type: "boolean",
+  },
+  {
+    envionmentVariableName: "EMAIL_HOST",
+    configName: "emailHost",
+    type: "string",
+  },
+  {
+    envionmentVariableName: "EMAIL_PORT",
+    configName: "emailPort",
+    type: "number",
+  },
+  {
+    envionmentVariableName: "EMAIL_SECURE",
+    configName: "emailSecure",
+    type: "boolean",
+  },
+  {
+    envionmentVariableName: "EMAIL_AUTH_USER",
+    configName: "emailAuthUser",
+    type: "string",
+  },
+  {
+    envionmentVariableName: "EMAIL_AUTH_PASS",
+    configName: "emailAuthPass",
+    type: "string",
+  },
+  {
+    envionmentVariableName: "EMAIL_SENDER_ADDRESS",
+    configName: "emailSenderAddress",
+    type: "string",
   },
   {
     envionmentVariableName: "CORS_ORIGIN",
@@ -58,7 +93,14 @@ const configElements: IConfigElement[] = [
 interface IConfig {
   listenPort: string;
   mongoDBUri: string;
+  endpoint: string;
   debug: boolean;
+  emailHost: string;
+  emailPort: number;
+  emailSecure: boolean;
+  emailAuthUser: string;
+  emailAuthPass: string;
+  emailSenderAddress: string;
   corsOrigin: string;
   jwtSecret: string;
   inviteCode: string;

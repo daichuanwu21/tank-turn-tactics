@@ -12,11 +12,10 @@ import mongoose from "mongoose";
 import handleError from "./error/handle-error.function";
 import verifyJSON from "./utils/verify-json.function";
 import tankRouter from "./tank/tank.router";
-import AppError from "./error/app.error";
 import { Server as SocketIOServer } from "socket.io";
 import initialTankSyncController from "./tank/initial-tank-sync.controller";
-import { User } from "./models";
 import TankChangeNotifier from "./utils/tank-change-notifier.class";
+import giveAPLoop from "./utils/give-ap-loop.function";
 
 const app = express();
 app.disable("x-powered-by");
@@ -68,12 +67,14 @@ const startServer = async () => {
   new TankChangeNotifier(socketIOServer);
 
   // Start server after listeners have been registered
-  setImmediate(() =>
+  setImmediate(() => {
     httpServer.listen({
       host: "localhost",
       port: config.listenPort,
-    })
-  );
+    });
+
+    giveAPLoop();
+  });
 };
 
 startServer();

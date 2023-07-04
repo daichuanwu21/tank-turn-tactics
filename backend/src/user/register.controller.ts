@@ -8,6 +8,7 @@ import { User } from "../models";
 import { promisify } from "util";
 import { pbkdf2, randomBytes } from "crypto";
 import { IUserSchema } from "./user.schema";
+import emailTransporter from "../utils/mailer.nodemailer";
 
 const registerController = async (req: Request, res: Response) => {
   // Ensure all fields are present (email, password, invite_code)
@@ -63,11 +64,33 @@ const registerController = async (req: Request, res: Response) => {
   });
   await user.save();
 
-  // TODO: send verification email
+  const verifyAddress = `${
+    config.endpoint
+  }/user/verify-email/${user._id.toString()}`;
+  await emailTransporter.sendMail({
+    from: config.emailSenderAddress,
+    to: normalizedEmail,
+    subject: "Verify your email address at Tank Turn Tactics",
+    text: `Hello, if you have not made an account at TTT, please disregard this email. To verify your account, head to: ${verifyAddress}`,
+    html: `<h1>Verify your email address at TTT</h1>
+
+    <h3>If you have not made an account at TTT, please disregard this email.</h3>
+    
+    <p>&nbsp;</p>
+    
+    <p>Hello! You&#39;ve made an account at TTT, and have thereby chosen to begin ruining your friendships!</p>
+    
+    <p>To get started, head <a href="${verifyAddress}">here to verify your email.</a></p>
+    
+    <p>&nbsp;</p>
+    
+    <p>If you cannot click the link, you may paste the following link into your browser: ${verifyAddress}</p>
+    `,
+  });
 
   res.status(200).json({
     detail:
-      "Account successfully created! Please check your inbox for a verification email.",
+      "Account successfully created! Please check your inbox (and junk mail) for a verification email.",
   });
 };
 
