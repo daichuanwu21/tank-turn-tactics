@@ -7,8 +7,6 @@
   - you getting hit by a player
   - you dying
 
-- implement sending verification email upon registration
-
 ### Medium-priority
 
 - add rate-limiting for registration
