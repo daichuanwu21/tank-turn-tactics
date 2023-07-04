@@ -71,6 +71,15 @@ const tankGiveActionPointController = async (
         );
       }
 
+      // Check if tank is dead
+      if (targetTank.healthPoints <= 0) {
+        throw new APIError(
+          StatusCodes.BAD_REQUEST,
+          "You cannot give action points to someone who's dead!",
+          true
+        );
+      }
+
       // Deduct AP
       tank.actionPoints = tank.actionPoints - 1;
 
