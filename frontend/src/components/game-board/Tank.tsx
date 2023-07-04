@@ -23,8 +23,12 @@ export default function Tank(props: ITankProps) {
   const tankColour = useMemo(() => {
     const limitedRange = range > 5 ? 5 : range;
 
-    const colour1 = [169, 169, 169]; // darkgrey
-    const colour2 = [0, 255, 255]; // cyan
+    const colour1 = [140, 140, 140]; // grey
+    const colour2 = [50, 222, 132]; // green
+
+    if (health <= 0) {
+      return `${colour1[0]},${colour1[1]},${colour1[2]},0.5`;
+    }
 
     // Interpolate between dull and bright colour to show range
     const red = (colour2[0] - colour1[0]) * (limitedRange / 5) + colour1[0];
@@ -32,9 +36,13 @@ export default function Tank(props: ITankProps) {
     const blue = (colour2[2] - colour1[2]) * (limitedRange / 5) + colour1[2];
 
     return `${red},${green},${blue},0.5`;
-  }, [range]);
+  }, [range, health]);
 
   const healthText = useMemo(() => {
+    if (health <= 0) {
+      return "💀";
+    }
+
     if (health <= 3) {
       return "❤️".repeat(health);
     }
@@ -60,8 +68,7 @@ export default function Tank(props: ITankProps) {
           display: "flex",
           flexDirection: "column",
 
-          height: constants.SQUARE_SIZE - 26, // offset is 2x margin
-          margin: 13,
+          height: constants.SQUARE_SIZE,
 
           justifyContent: "center",
           alignItems: "center",

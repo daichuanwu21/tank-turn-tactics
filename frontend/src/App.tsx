@@ -1,4 +1,5 @@
 import GameBoard from "./components/game-board/GameBoard";
+import FloatingUserMenu from "./components/auth/FloatingUserMenu";
 
 const App: React.FC = () => {
   return (
@@ -9,6 +10,8 @@ const App: React.FC = () => {
       }}
     >
       <GameBoard />
+
+      <FloatingUserMenu />
     </div>
   );
 };

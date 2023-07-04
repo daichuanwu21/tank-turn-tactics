@@ -43,6 +43,9 @@ httpServer.on("listening", () =>
 
 const socketIOServer = new SocketIOServer(httpServer, {
   serveClient: false,
+  cors: {
+    origin: config.corsOrigin,
+  },
 });
 socketIOServer.of("/tank-events").on("connection", (socket) => {
   logger.debug(`Client ${socket.id} connected to tank events!`);
@@ -52,7 +55,6 @@ socketIOServer.of("/tank-events").on("connection", (socket) => {
     );
   });
 });
-socketIOServer.of("/tank-events");
 
 httpServer.on("error", handleHttpServerError);
 process.on("uncaughtException", (err) => handleError(err));

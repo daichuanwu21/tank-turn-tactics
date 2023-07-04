@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import type { EntityState } from "@reduxjs/toolkit";
 import SocketIOManager from "../socket-io-manager";
+import { RootState } from "./store";
+import * as constants from "../constants";
 
 export interface ITankDocument {
   id: string;
@@ -15,10 +17,16 @@ export interface ITankDocument {
 
 const tanksAdapter = createEntityAdapter<ITankDocument>();
 export const gameApi = createApi({
+  reducerPath: "gameApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${
-      process.env.REACT_APP_API_USE_HTTPS === "YES" ? "https://" : "http://"
-    }${process.env.REACT_APP_API_DOMAIN}/`,
+    baseUrl: `${constants.API_ENDPOINT}/`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token;
+      if (token) {
+        headers.set("authentication", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (build) => ({
     tanks: build.query<EntityState<ITankDocument>, undefined>({

@@ -72,13 +72,17 @@ const loginController = async (req: Request, res: Response) => {
   const token = await promisify(sign as any)(
     {
       userId: user._id.toString(),
-      tankId: tank._id.toString(),
     },
     config.jwtSecret,
     { algorithm: "HS512" }
   );
 
-  res.status(200).json({ token });
+  res.status(200).json({
+    token,
+    email: user.email,
+    userId: user._id.toString(),
+    tankId: tank._id.toString(),
+  });
 };
 
 export default loginController;

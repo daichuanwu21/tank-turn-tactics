@@ -1,9 +1,6 @@
 import { Manager } from "socket.io-client";
+import * as constants from "./constants";
 
-const SocketIOManager = new Manager(
-  `${process.env.REACT_APP_API_USE_HTTPS === "YES" ? "https://" : "http://"}${
-    process.env.REACT_APP_API_DOMAIN
-  }`
-);
+const SocketIOManager = new Manager(constants.API_ENDPOINT);
 
 export default SocketIOManager;

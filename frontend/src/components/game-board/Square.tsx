@@ -26,7 +26,8 @@ export default function Square(props: ISquareProps) {
     >
       <p
         style={{
-          margin: 3, // Override user agent stylesheet
+          margin: 0, // Override user agent stylesheet
+          marginRight: 5,
         }}
       >
         {props.squareKey}
