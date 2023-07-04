@@ -79,7 +79,6 @@ export default function GameBoard() {
                   <Grid />
 
                   {data.ids.map((tankId: any) => {
-                    if (!data.entities[tankId]) return;
                     const tankDoc = data.entities[tankId] as ITankDocument;
 
                     return <Tank key={tankDoc.id} tank={tankDoc} />;

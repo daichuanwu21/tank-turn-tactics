@@ -206,7 +206,17 @@ export default function Tank({ tank }: ITankProps) {
 
       refetch();
     },
-    [tank, auth]
+    [
+      tank,
+      auth,
+      addHealthPoint,
+      giveHealthPoint,
+      giveActionPoint,
+      move,
+      refetch,
+      shoot,
+      upgradeRange,
+    ]
   );
 
   return (

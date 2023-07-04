@@ -19,7 +19,7 @@ export default function FloatingUserMenu() {
     if (auth.loggedIn) {
       close();
     }
-  }, [auth.loggedIn]);
+  }, [auth.loggedIn, close]);
 
   return (
     <Container sx={{ position: "fixed", top: 0, right: 0, padding: 14 }}>
