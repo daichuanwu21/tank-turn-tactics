@@ -82,16 +82,7 @@ export default function GameBoard() {
                     if (!data.entities[tankId]) return;
                     const tankDoc = data.entities[tankId] as ITankDocument;
 
-                    return (
-                      <Tank
-                        key={tankDoc.id}
-                        displayName={tankDoc.displayName}
-                        positionX={tankDoc.positionX}
-                        positionY={tankDoc.positionY}
-                        range={tankDoc.range}
-                        health={tankDoc.healthPoints}
-                      />
-                    );
+                    return <Tank key={tankDoc.id} tank={tankDoc} />;
                   })}
                 </div>
               </TransformComponent>

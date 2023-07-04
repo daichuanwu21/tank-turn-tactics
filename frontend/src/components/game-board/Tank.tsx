@@ -1,32 +1,33 @@
 import { useMemo } from "react";
 import * as constants from "../../constants";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { ITankDocument } from "../../redux/game-api";
 
 interface ITankProps {
-  displayName: string;
-  positionX: number;
-  positionY: number;
-  range: number;
-  health: number;
+  tank: ITankDocument;
 }
 
-export default function Tank(props: ITankProps) {
-  const { displayName, positionX, positionY, range, health } = props;
+export default function Tank({ tank }: ITankProps) {
+  const auth = useSelector((state) => (state as RootState).auth);
+
   // Calculate pixel position on grid from tank coordinates
   const positionOnGrid = useMemo(() => {
-    const topOffset = positionY * constants.SQUARE_SIZE;
+    const topOffset = tank.positionY * constants.SQUARE_SIZE;
 
-    const leftOffset = positionX * constants.SQUARE_SIZE;
+    const leftOffset = tank.positionX * constants.SQUARE_SIZE;
 
     return [topOffset, leftOffset];
-  }, [positionX, positionY]);
+  }, [tank]);
 
   const tankColour = useMemo(() => {
-    const limitedRange = range > 5 ? 5 : range;
+    const limitedRange = tank.range > 5 ? 5 : tank.range;
 
     const colour1 = [140, 140, 140]; // grey
-    const colour2 = [50, 222, 132]; // green
+    let colour2 = [50, 222, 132]; // green
+    if (auth.loggedIn) colour2 = [255, 215, 0]; // gold
 
-    if (health <= 0) {
+    if (tank.healthPoints <= 0) {
       return `${colour1[0]},${colour1[1]},${colour1[2]},0.5`;
     }
 
@@ -36,19 +37,19 @@ export default function Tank(props: ITankProps) {
     const blue = (colour2[2] - colour1[2]) * (limitedRange / 5) + colour1[2];
 
     return `${red},${green},${blue},0.5`;
-  }, [range, health]);
+  }, [tank, auth]);
 
   const healthText = useMemo(() => {
-    if (health <= 0) {
+    if (tank.healthPoints <= 0) {
       return "💀";
     }
 
-    if (health <= 3) {
-      return "❤️".repeat(health);
+    if (tank.healthPoints <= 3) {
+      return "❤️".repeat(tank.healthPoints);
     }
 
-    return `❤️ ${health}`;
-  }, [health]);
+    return `❤️ ${tank.healthPoints}`;
+  }, [tank]);
 
   return (
     <div
@@ -77,9 +78,9 @@ export default function Tank(props: ITankProps) {
           backgroundColor: `rgba(${tankColour})`,
         }}
       >
-        <p style={{ margin: 0 }}>{displayName}</p>
+        <p style={{ margin: 0 }}>{tank.displayName}</p>
         <p style={{ margin: 0 }}>{healthText}</p>
-        <p style={{ margin: 0 }}>R: {range}</p>
+        <p style={{ margin: 0 }}>R: {tank.range}</p>
       </div>
     </div>
   );
