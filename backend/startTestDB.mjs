@@ -19,7 +19,7 @@ const mongod = new MongoMemoryReplSet({
     },
   ],
   binary: {
-    version: "6.0.7",
+    version: "6.0.8",
     systemBinary: "/usr/bin/mongod",
   },
   replSet: {
