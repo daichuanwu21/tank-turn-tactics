@@ -1,3 +1,5 @@
+# This project is not maintained as of 30/10/2023
+
 # Tank Turn Tactics
 
 A web implementation of the board game Tank Turn Tactics [originally prototyped at Halfbrick Studios](https://youtu.be/aOYbR-Q_4Hs). Reportedly, the game was so damaging to relationships between team members and, disruptive to productivity that it had to be banned.
